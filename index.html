@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Masuk Dulu yaa!</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Pixelify+Sans:wght@400..700&display=swap');
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center; 
+      align-items: center; 
+      height: 100vh;
+      background: linear-gradient(135deg, #FFD5D5, #FFF5F7, #FFE0E0);
+      background-size: 300% 300%;
+      animation: gradientBG 8s ease infinite;
+      overflow: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .content {
+      text-align: center;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 400px;
+      background: #fff;
+      padding: 20px 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 2;
+    }
+
+    .msg h1 {
+      margin-bottom: 10px;
+      font-family: "Lobster", cursive;
+      color: #ff6b81;
+    }
+
+    .msg p {
+      margin: 5px;
+      color: #444;
+    }
+
+    .countdown {
+      font-weight: bold;
+      color: #ff6b81;
+      margin: 15px 0;
+      font-size: 18px;
+    }
+
+    .btn {
+      display: none;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      background-color: #FDAAAA;
+      color: #fff;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background-color: #ff6b81;
+    }
+
+    /* Floating hearts background */
+    .hearts {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hearts span {
+      position: absolute;
+      bottom: -50px;
+      font-size: 20px;
+      color: #ff6b81;
+      animation: float 6s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="msg">
+      <h1>Tunggu Dulu</h1>
+      <p>Kamu gabisa masuk sebelum waktu ulang tahun kamu tiba, jadi ini bakal kebuka di jam 00.00 WIB 6 Oktober</p>
+      <p>Aku sengaja biar kamu penasaran wleee, ditunggu yaa cantikk!</p>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown" id="countdown">Loading...</div>
+
+    <!-- Tombol muncul setelah waktunya tiba -->
+    <button id="goBtn" class="btn" onclick="location.href='welcome.html'">Masuk Sekarang 💖</button>
+  </div>
+
+  <!-- Floating hearts -->
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    // Target tanggal buka (contoh: 6 Oktober 2025 jam 00:00 WIB)
+    const targetDate = new Date("2025-10-06T00:00:00").getTime();
+    const countdownEl = document.getElementById("countdown");
+    const goBtn = document.getElementById("goBtn");
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        countdownEl.innerHTML = "Udah waktunya 🎉!";
+        goBtn.style.display = "inline-block"; // munculkan tombol
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownEl.innerHTML = `${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik lagi 💖`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Floating hearts
+    const heartsContainer = document.getElementById('hearts');
+    function createHeart() {
+      const heart = document.createElement("span");
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 20 + 15 + "px";
+      heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+      heartsContainer.appendChild(heart);
+      setTimeout(() => { heart.remove(); }, 6000);
+    }
+    setInterval(createHeart, 500);
+  </script>
+</body>
+</html>
